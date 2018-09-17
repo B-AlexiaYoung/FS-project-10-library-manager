@@ -1,0 +1,32 @@
+extends layout.pug
+block content  
+    body    
+        h1 #{pagetitle}
+        a(class="button" href="/books/new") Create New Book
+        nav
+            ul
+                li 
+                    a(href="/books") All
+                li 
+                    a(href="/books/overdue") Overdue
+                li 
+                    a(href="/books/checked_out") Checked Out
+                table
+                    tr  
+                        th Book Title
+                        th Author
+                        th Genre
+                        th Year Release/First Published
+                    - const eachBook = bookinfo
+                    each eBook in eachBook
+                        tr
+                          td    
+                            a(href="/books/details") #{eBook.dataValues.title} 
+                          td #{eBook.dataValues.author} 
+                          td #{eBook.dataValues.genre}
+                          td #{eBook.dataValues.first_published}  
+
+
+
+                
+    

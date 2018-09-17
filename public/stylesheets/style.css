@@ -37,7 +37,7 @@ ul {
   margin-bottom: 10px;
   line-height: 1.3em;
 }
-nav {
+.navBorder {
   border-bottom: 2px solid #D8B493;
 }
 nav ul li {
@@ -88,6 +88,7 @@ input {
   font-size: 14px;
   border-radius: 2px;
   border-color: #E7E7E7;
+
 }
 input[type=text], select {
   margin-left: 10px;
