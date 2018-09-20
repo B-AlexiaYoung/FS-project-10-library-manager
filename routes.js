@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 let Books = require("./models").books;
+let Loans =require("./models").loans;
 
 //render home page
 router.get("/", (req, res) =>{
@@ -9,12 +10,10 @@ router.get("/", (req, res) =>{
 });
 // Books listing
 router.get("/books", (req, res) => {
-    Books.findAll().then( function(books){
+  Books.findAll().then( function(books){
+      console.log(books);
         res.render("all_books",{bookinfo:books, pagetitle:"All Books"});
-        //console.log(books[0].dataValues);
     })
-    //console.log(Books.findAll());
-    // res.locals.books=books.get();
     
 });
 //routing for about patrons
@@ -26,9 +25,27 @@ router.get("/loans", (req, res) => {
     res.render("all_loans");
     
 });
-// routing individual books
-router.get("/books/details",(req, res)=>{
-    res.render("book_details");
+// routing individual books_
+router.get("/books/:id",(req, res)=>{
+    //console.log(req.params); 
+    console.log(req.params.id)
+    //console.log(req);
+       let bk=req.params.id;
+
+    console.log(bk);
+    Books.findById(bk, {include:[{
+                        model:loans,
+                        required: true}]
+                   })
+        .then(function (books){
+        console.log(books.dataValues)        
+    res.render("book_details", {title: books.dataValues.title, author:books.dataValues.author, genre:books.dataValues.genre, first_published:books.dataValues.first_published, loantitle: loans.dataValues.title, patron:loans.dataValues.patron, loaned_on:loans.dataValues.loaned_on, return_by:loans.dataValues.return_by});
+});
+
+   
+    // Loans.findById(1).then (function(loans){
+    //     res.render("book_details", {loantitle: loans.dataValues.title, patron:loans.dataValues.patron, loaned_on:loans.dataValues.loaned_on, return_by:loans.dataValues.return_by })
+    // })
 });
 // routing overdue books
 router.get("/books/overdue",(req, res)=>{
@@ -46,9 +63,15 @@ router.get("/books/checked_out",(req, res)=>{
 // add new book
 router.post("/books/create_new_book", function(req, res, next){
     console.log(req.body);
-    Books.create(req.body);
-    res.redirect('/books');
+    Books.create(req.body)
+    .then ( res.redirect('/books'))
+    .catch(function (err) {
+        console.log(err);
+        // return res.status(422).send(err.errors);
+    })
+
 })
+   
 
 
 module.exports= router;

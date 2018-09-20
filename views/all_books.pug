@@ -21,7 +21,7 @@ block content
                     each eBook in eachBook
                         tr
                           td    
-                            a(href="/books/details") #{eBook.dataValues.title} 
+                            a(href="/books/" + `${eBook.dataValues.id}` ) #{eBook.dataValues.title}
                           td #{eBook.dataValues.author} 
                           td #{eBook.dataValues.genre}
                           td #{eBook.dataValues.first_published}  

@@ -55,6 +55,8 @@ h2 {
   border-top: 2px solid #e7e7e7;
   padding-top: 20px;
 }
+
+
 th {
   border-bottom: 2px solid #D8B493;
   text-align: left;
@@ -68,6 +70,7 @@ tr .button {
   padding: 4px 8px 5px;
   font-weight: normal;
 }
+
   tr .button:hover {
     background-color: #547798;
   }
@@ -75,6 +78,7 @@ tr:nth-child(2n) {
   background: #E7E7E7;
 }
 td {
+  word-wrap:break-word;
   padding: 5px 20px 5px 10px;
 }
 label {

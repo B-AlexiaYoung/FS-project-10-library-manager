@@ -13,8 +13,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const routes = require("./routes");
 app.use(routes);
 
-createNewBook=()=>{
-console.log("pressed button");
-}
+// app.use( (err,req,res,next)=>{
+//     console.log("error!");
+// });
 //setup server
 app.listen(3000);

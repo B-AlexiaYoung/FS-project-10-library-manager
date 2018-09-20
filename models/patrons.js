@@ -10,10 +10,16 @@ module.exports = (sequelize, DataTypes) => {
     zip_code: DataTypes.INTEGER
   }, {
     // don't add the timestamp attributes (updatedAt, createdAt)
-    timestamps: false}
+    timestamps: false,
+    hooks:{ beforeCreate: (patrons)=>{
+      patrons.full_name = `${patrons.first_name}` `${patrons.last_name}`
+    }
+  }
+  }
   );
   patrons.associate = function(models) {
     // associations can be defined here
+    //patrons.hasMany(models.loans)
   };
   return patrons;
 };

@@ -1,4 +1,45 @@
 extends layout.pug
 block content 
     body
-        h1 hello
+        h1  #{title}
+        - const singleBook = bookinfo
+        form( action="./books/details" method="post")  
+        
+            label(for="bkTitle") Book Title
+            input(id="bkTitle" name= "title" type="text" value = `${title}` required) 
+        p
+            label(for="author") Author
+            input(id= "author" name ="author" type="text" value = `${author}` required) 
+        p     
+            label(for="genre") Genre
+            input(id = "genre" name="genre" type="text" value =`${genre}` required)  
+        p   
+            label(for="first_published") First Published
+            input(id="first_published" name="first_published" type="number" value=`${first_published}`  )
+
+        input(type="submit" value="Update")
+
+        h2 Loan History
+        table
+            thead
+                tr
+                    th Book
+                    th Patron 
+                    th Loaned on
+                    th Return by 
+                    th Returned on
+                    th Action
+            tbody
+                tr
+                td
+                    a(href="book_detail.html") #{title}
+                
+                    
+                td 
+                    a(href="patron_detail.html") #{patron_id}
+
+                td #{loaned_on}
+                td #{return_by}
+                td
+                td 
+                    a(href="return_book.html" class="button") Return Book
