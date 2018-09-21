@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 var bodyParser = require('body-parser');
+app.locals.momemt = require('moment');
 
 //set static routing for css
 app.use('/static', express.static('public'));

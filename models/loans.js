@@ -9,12 +9,15 @@ module.exports = (sequelize, DataTypes) => {
     returned_on: {type:DataTypes.DATE,  allowNull:false},
   }, {
     // don't add the timestamp attributes (updatedAt, createdAt)
-    timestamps: false}
+    timestamps: false,
+    underscored:true
+  }
   );
 
   loans.associate = function(models) {
     // associations can be defined here
-   models.loans.belongsTo(models.books)
+   models.loans.belongsTo(models.books);
+   models.loans.belongsTo(models.patrons);
   };
   return loans;
 };

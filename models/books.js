@@ -25,13 +25,14 @@ module.exports = (sequelize, DataTypes) => {
                      }
   }, {
     // don't add the timestamp attributes (updatedAt, createdAt)    
-    timestamps: false
-    
+    timestamps: false,
+    underscored:true
     }
   );
   books.associate = function(models) {
     // associations can be defined here 
-   models.books.hasMany(models.loans);
+   //models.books.hasMany(models.loans, {foreignKey:"book_id"});
+   models.books.hasMany(models.loans)
   };
   return books;
 };  

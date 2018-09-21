@@ -11,15 +11,17 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     // don't add the timestamp attributes (updatedAt, createdAt)
     timestamps: false,
-    hooks:{ beforeCreate: (patrons)=>{
-      patrons.full_name = `${patrons.first_name}` `${patrons.last_name}`
+    underscored:true,
+
+    // hooks:{ beforeCreate: (patrons)=>{
+    //   patrons.full_name = `${patrons.first_name}` `${patrons.last_name}`
     }
-  }
-  }
+  
+  
   );
   patrons.associate = function(models) {
     // associations can be defined here
-    //patrons.hasMany(models.loans)
+    models.patrons.hasMany(models.loans)
   };
   return patrons;
 };

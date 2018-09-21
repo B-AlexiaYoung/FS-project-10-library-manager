@@ -6,16 +6,16 @@ block content
         form( action="./books/details" method="post")  
         
             label(for="bkTitle") Book Title
-            input(id="bkTitle" name= "title" type="text" value = `${title}` required) 
+            input(id="bkTitle" name= "title" type="text" value = `${bkloan.title}` required) 
         p
             label(for="author") Author
-            input(id= "author" name ="author" type="text" value = `${author}` required) 
+            input(id= "author" name ="author" type="text" value = `${bkloan.author}` required) 
         p     
             label(for="genre") Genre
-            input(id = "genre" name="genre" type="text" value =`${genre}` required)  
+            input(id = "genre" name="genre" type="text" value =`${bkloan.genre}` required)  
         p   
             label(for="first_published") First Published
-            input(id="first_published" name="first_published" type="number" value=`${first_published}`  )
+            input(id="first_published" name="first_published" type="number" value=`${bkloan.first_published}`  )
 
         input(type="submit" value="Update")
 
@@ -27,19 +27,19 @@ block content
                     th Patron 
                     th Loaned on
                     th Return by 
-                    th Returned on
+                    th Returned on                
                     th Action
             tbody
+            
                 tr
                 td
-                    a(href="book_detail.html") #{title}
+                    a(href="book_detail.html") #{bkloan.title}   
                 
                     
-                td 
+                td  
                     a(href="patron_detail.html") #{patron_id}
-
-                td #{loaned_on}
-                td #{return_by}
-                td
+                td  #{moment(loaned_on).format("YYYY-MM-DD")} 
+                td #{moment({return_by}).format("YYYY-MM-DD")}
+                td #{moment({return_by}).format("YYYY-MM-DD")}
                 td 
                     a(href="return_book.html" class="button") Return Book
