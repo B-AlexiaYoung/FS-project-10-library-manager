@@ -17,6 +17,7 @@ module.exports = {
       last_name: {
         type: Sequelize.STRING
       },
+      
       address: {
         type: Sequelize.STRING
       },

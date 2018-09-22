@@ -43,6 +43,9 @@ router.get("/books/:id",(req, res)=>{
             
             include:[{    
             model:Loans,
+              include:[{
+                  model:Patrons,
+              }]
         //as: "loans"
         }],
             where:{
@@ -52,20 +55,14 @@ router.get("/books/:id",(req, res)=>{
         //raw:true,
         
     }).then(function (books){
+        //console.log(books.dataValues.loans[0].dataValues.patron.dataValues.first_name)
         
-        console.log(books.loans.loaned_on)      
-    //res.render("book_details", {title: books.title, author:books.author, genre:books.genre, first_published:books.first_published});
     res.render("book_details", {bkloan: books, moment} )
     //res.render("book_details", {bKloan: books});
 });
 
    
-//     Loans.findById(bk, {include:[{
-//         model:Books,
-//         required: true}]
-//    }).then (function(loans){
-//         res.render("book_details", {loantitle: loans.dataValues.title, patron:loans.dataValues.patron, loaned_on:loans.dataValues.loaned_on, return_by:loans.dataValues.return_by })
-//     })
+
 });
 // routing overdue books
 router.get("/books/overdue",(req, res)=>{

@@ -1,5 +1,6 @@
 extends layout.pug
 block content 
+    
     body
         h1  #{title}
         - const singleBook = bookinfo
@@ -31,15 +32,27 @@ block content
                     th Action
             tbody
             
+
+
+
                 tr
                 td
                     a(href="book_detail.html") #{bkloan.title}   
+                - const getfromloans = bkloan.dataValues.loans
                 
-                    
-                td  
-                    a(href="patron_detail.html") #{patron_id}
-                td  #{moment(loaned_on).format("YYYY-MM-DD")} 
-                td #{moment({return_by}).format("YYYY-MM-DD")}
-                td #{moment({return_by}).format("YYYY-MM-DD")}
+                //- console.log(getfromloans)
+                each getfrom, index in getfromloans
+                    //- fullName = getfrom.dataValues.patrons.dataValues.first_name
+                    - let fullName = getfrom.dataValues.patron.dataValues.first_name + " " + getfrom.dataValues.patron.dataValues.last_name
+                    - let loanedOn = getfrom.dataValues.loaned_on
+                    - let returnBy = getfrom.dataValues.return_by
+                    - let returnOn = getfrom.dataValues.return_on
+
+                    td  
+                        a(href="patron_detail.html") #{fullName}
+                    td  #{moment(loanedOn).format("YYYY-MM-DD")} 
+                    td  #{moment(returnBy).format("YYYY-MM-DD")}
+                    td  #{moment(returnOn).format("YYYY-MM-DD")}
+
                 td 
                     a(href="return_book.html" class="button") Return Book
