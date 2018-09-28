@@ -3,22 +3,22 @@ block content
     
     body
         h1  #{title}
-        - const singleBook = bookinfo
-        form( action="./books/details" method="post")  
-        
-            label(for="bkTitle") Book Title
-            input(id="bkTitle" name= "title" type="text" value = `${bkloan.title}` required) 
-        p
-            label(for="author") Author
-            input(id= "author" name ="author" type="text" value = `${bkloan.author}` required) 
-        p     
-            label(for="genre") Genre
-            input(id = "genre" name="genre" type="text" value =`${bkloan.genre}` required)  
-        p   
-            label(for="first_published") First Published
-            input(id="first_published" name="first_published" type="number" value=`${bkloan.first_published}`  )
+        //- const singleBook = bookinfo
+        form( action="/books/update/" + `${bkloan.id}` + "?_method=PUT" method="post")  
+            label(for="title") Book Title
+            input(id="title" name= "title" type="text" value = `${bkloan.title}` required) 
+            p
+                label(for="author") Author
+                a(href="/patrons/" + `${bkloan.id}`)
+                    input(id= "author" name ="author" type="text" value = `${bkloan.author}` required) 
+            p     
+                label(for="genre") Genre
+                input(id = "genre" name="genre" type="text" value =`${bkloan.genre}` required)  
+            p   
+                label(for="first_published") First Published
+                input(id="first_published" name="first_published" type="number" value=`${bkloan.first_published}`  )
 
-        input(type="submit" value="Update")
+            input(type="submit" value="Update")
 
         h2 Loan History
         table
@@ -37,7 +37,7 @@ block content
 
                 tr
                 td
-                    a(href="book_detail.html") #{bkloan.title}   
+                    a(href="#") #{bkloan.title}   
                 - const getfromloans = bkloan.dataValues.loans
                 
                 //- console.log(getfromloans)
@@ -49,7 +49,7 @@ block content
                     - let returnOn = getfrom.dataValues.return_on
 
                     td  
-                        a(href="patron_detail.html") #{fullName}
+                        a(href="patrons/patron_details/"+ `${getfrom.dataValues.patron.dataValues.library_id}` ) #{fullName}
                     td  #{moment(loanedOn).format("YYYY-MM-DD")} 
                     td  #{moment(returnBy).format("YYYY-MM-DD")}
                     td  #{moment(returnOn).format("YYYY-MM-DD")}

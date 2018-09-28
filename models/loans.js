@@ -3,10 +3,37 @@ module.exports = (sequelize, DataTypes) => {
   const loans = sequelize.define('loans', {
     id: {type: DataTypes.INTEGER, primaryKey: true,  allowNull:false},
     book_id:{type: DataTypes.INTEGER, allowNull:false},
-    patron_id: {type: DataTypes.INTEGER, allowNull:false},
-    loaned_on: {type:DataTypes.DATE,  allowNull:false},
-    return_by:{type: DataTypes.DATE,  allowNull:false},
-    returned_on: {type:DataTypes.DATE,  allowNull:false},
+    patron_id: {
+      type: DataTypes.INTEGER,
+      allowNull:false,
+      validate: {
+        notEmpty: {
+          msg: "Patron id is required"
+        }
+      }
+      
+    },
+    loaned_on: {
+      type:DataTypes.DATE,
+      allowNull:false,
+      // validate: {
+      //   notEmpty: {
+      //     msg: "Loaned on  is required"
+      //   }
+      // }
+    },
+    return_by:{
+      type: DataTypes.DATE,  
+      allowNull:false,
+      // validate: {
+      //   notEmpty: {
+      //     msg: "Return by is required"
+      //   }
+      // }
+    },
+    returned_on: {
+      type:DataTypes.DATE,  
+      allowNull:false},
   }, {
     // don't add the timestamp attributes (updatedAt, createdAt)
     timestamps: false,

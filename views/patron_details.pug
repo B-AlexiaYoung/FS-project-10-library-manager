@@ -1,0 +1,62 @@
+extends layout.pug
+block content  
+
+    body
+        h1 Patron: #{customer.first_name} #{customer.last_name} 
+        form(action="/books/patrons/patron_details/" +`${customer.library_id}` + "?_method=PUT" method="post")
+            p 
+                label(for="first_name") First Name
+                input(id="first_name" name="first_name" type="text" value=customer.first_name required) 
+            p
+                label(for="last_name") Last Name
+                input(id="last_name" name="last_name" type="text" value=customer.last_name required) 
+            p
+                label(for="address") Address
+                input(id="address" name="address" type="text" value=customer.address required)
+            p
+                label(for="email") Email
+                input(id="email" name="email" type="text" value=customer.email required)
+            p
+                label(for="library_id") Library Id
+                input(id="library_id" name="library_id" type="text" value=customer.library_id required)  
+            p
+                label(for="zip_code") Zip Code
+                input(id="zip_code" name="zip_code" type="text" value=customer.zip_code required)
+            
+            input(type="submit" value="Update")
+
+        h2 Loan History
+        table
+            thead
+                tr
+                    th Book
+                    th Patron 
+                    th Loaned on
+                    th Return by 
+                    th Returned on
+                    th Action
+            tbody
+            - const getdetailsloans = customer.dataValues.loans
+
+                tr
+                each detail, index in getdetailsloans
+                    -let customerbookid = customer.loans[index].dataValues.book_id
+                    -let customerfullname = customer.first_name +" "+ customer.last_name
+                    -let customerloanedon = customer.loans[index].dataValues.loaned_on
+                    -let customereturnby = customer.loans[index].dataValues.return_by
+                        td
+                            a(href="/books/"+ customerbookid) #{customerbookid}
+                        td
+                            a(href="#") #{customerfullname}
+                        td #{customerloanedon}
+                        td #{customereturnby}
+                        td
+                        td
+                            a(href="return_book.html" class="button") Return Book
+                        tr
+                
+                    
+                
+        
+        
+

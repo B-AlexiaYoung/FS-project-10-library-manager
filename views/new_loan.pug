@@ -1,0 +1,31 @@
+extends layout.pug
+block content  
+    body
+        h1 New Loan
+        form(action="/" method="post")
+            P 
+                label(for="book_id") Book
+                select(id="book_id")
+                    - const newLoanBk = newloan;
+                        each newloanitem, index in newLoanBk
+                            - let newloantitle = newLoanBk[index].dataValues.title
+                                option(value="1") #{newloantitle}
+            p
+                label(for="patron_id") Patron
+                select(id="patron_id")
+                    - const newLoanPatron = newloanP;
+                        each newPatronitem, index in newLoanPatron
+                            - let newloanPatronfullname = newLoanPatron[index].dataValues.first_name + " "+ newLoanPatron[index].dataValues.last_name
+                                option(value="1") #{newloanPatronfullname}
+            p
+                label(for="loaned_on") Loaned on:
+                - let dateloanedon = momemt().format("ddd MMM  DD  YYYY HH:mm:ss")
+                - let fulldate= dateloanedon +" GMT-700 (PDT)"
+                -let returndate = momemt().add(7,'d').format("ddd MMM  DD  YYYY HH:mm:ss")
+                input(id="loaned_on" type="text" value= fulldate )
+            p
+                label(for="return_by") Return by:
+                input(id="return_by" type="text" value= returndate)
+            p
+                input(type="submit" value="Create New Loan")
+    

@@ -1,4 +1,43 @@
 extends layout.pug
 block content    
+    
     body
     h1 Loans
+    p
+        a(href="/new_loan" class="button") Create New Loan
+    p Filters 
+        a(href="/books/all_loans") All 
+        a(href="overdue_loans.html") Overdue 
+        a(href="checked_loans.html") Checked Out
+    table
+        thead
+            tr
+                th Book
+                th Patron 
+                th Loaned on
+                th Return by 
+                th Returned on
+                th Action
+       
+        tbody
+            -const  bookloaned= loaninfo
+            each loanitem, index in bookloaned
+                - let itemtitle = bookloaned[index].dataValues.book.dataValues.title
+                - let itemcustomer = bookloaned[index].dataValues.patron.dataValues.first_name +" "+ bookloaned[index].dataValues.patron.dataValues.last_name
+                - let itemloanedon = bookloaned[index].dataValues.loaned_on
+                - let itemreturnby = bookloaned[index].dataValues.return_by
+                - let itemreturnedon = bookloaned[index].dataValues.returned_on
+                - let itembookid = bookloaned[index].book_id
+                - let itemlibraryid = bookloaned[index].dataValues.patron.dataValues.library_id
+
+                tr
+                    td
+                        a(href="/books/" + `${itembookid}`) #{itemtitle}
+                    td
+                        a(href="/books/patrons/patron_details/" + `${itemlibraryid}`) #{itemcustomer}
+                    td #{moment(itemloanedon).format("YYYY-MM-DD")} 
+                    td  #{moment(itemreturnby).format("YYYY-MM-DD")}
+                    td  #{moment(itemreturnedon).format("YYYY-MM-DD")}
+                    td
+                        a(href="return_book.html" class="button") Return Book
+                

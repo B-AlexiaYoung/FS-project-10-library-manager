@@ -8,16 +8,28 @@ module.exports = (sequelize, DataTypes) => {
     title: {type:DataTypes.STRING,
             allowNull:false,
             validate:{
-                      notEmpty:true
-                     }
+              notEmpty:{
+                msg: "Title is required"
+              }
+            }
            },
 
     author:{type:DataTypes.STRING,
-            allowNull:false
+            allowNull:false,
+            // validate:{
+            //   notEmpty:{
+            //     msg: "Author is required"
+            //   }
+            //  }
            },
 
     genre: {type:DataTypes.STRING,
-           allowNull:false
+           allowNull:false,
+          //  validate:{
+          //   notEmpty:{
+          //     msg: "Genre is required"
+          //   }
+          // }
            },
 
     first_published: {type:DataTypes.INTEGER,
@@ -32,7 +44,8 @@ module.exports = (sequelize, DataTypes) => {
   books.associate = function(models) {
     // associations can be defined here 
    //models.books.hasMany(models.loans, {foreignKey:"book_id"});
-   models.books.hasMany(models.loans)
+   models.books.hasMany(models.loans);
+   //models.books.hasMany(models.patrons);
   };
   return books;
 };  

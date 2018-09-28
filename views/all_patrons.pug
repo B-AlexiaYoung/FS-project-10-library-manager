@@ -1,4 +1,27 @@
 extends layout.pug
 block content    
-    body
+   body
     h1 Patrons
+    p
+        a(href="new_patron.html" class="button") Create New Patron
+    table
+        head
+            tr
+                th Name 
+                th Address
+                th Email
+                th Library ID
+                th Zip
+           
+        tbody
+            -const librarypatron = patroninfo
+            each libpatron in librarypatron
+                tr
+                    td
+                        a(href="/books/patrons/patron_details/"+ `${libpatron.library_id}`) #{libpatron.first_name} #{libpatron.last_name}
+                    td  #{libpatron.address}
+                    td  #{libpatron.email}
+                    td  #{libpatron.library_id}
+                    td  #{libpatron.zip_code}
+                
+               
