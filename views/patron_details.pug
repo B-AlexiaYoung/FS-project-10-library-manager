@@ -51,8 +51,10 @@ block content
                         td #{customerloanedon}
                         td #{customereturnby}
                         td
+                        if(customerloandon)
                         td
-                            a(href="return_book.html" class="button") Return Book
+                            a(href="/return/" + customerbookid class="button") Return Book
+                        
                         tr
                 
                     

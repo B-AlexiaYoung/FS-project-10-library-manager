@@ -46,13 +46,16 @@ block content
                     - let fullName = getfrom.dataValues.patron.dataValues.first_name + " " + getfrom.dataValues.patron.dataValues.last_name
                     - let loanedOn = getfrom.dataValues.loaned_on
                     - let returnBy = getfrom.dataValues.return_by
-                    - let returnOn = getfrom.dataValues.return_on
+                    - let returnedOn = getfrom.dataValues.returned_on
 
                     td  
                         a(href="patrons/patron_details/"+ `${getfrom.dataValues.patron.dataValues.library_id}` ) #{fullName}
                     td  #{moment(loanedOn).format("YYYY-MM-DD")} 
                     td  #{moment(returnBy).format("YYYY-MM-DD")}
-                    td  #{moment(returnOn).format("YYYY-MM-DD")}
+                    if returned = null
+                        td  |
+                    else 
+                        td #{moment(returnedOn).format("YYYY-MM-DD")}
 
                 td 
-                    a(href="return_book.html" class="button") Return Book
+                    a(href="return/returned"+ getfromloans.id class="button") Return Book

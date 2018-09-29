@@ -85,7 +85,27 @@ router.get("/books/patrons", (req, res) => {
         });
     })
 });
+//routing return book
+router.get("/return/:id", (req, res) => {
+    Loans.findOne({
+        include: [{
+            model: Books
+        },
+        {
+            model: Patrons
+        }
+    ],
 
+    }).then(function (loans) {
+        //console.log(loans.book.title)
+
+        res.render("return", {
+            loanreturn: loans,
+            moment,
+            
+        })
+    });
+})
 
 // routing overdue books
 router.get("/books/overdue", (req, res) => {
@@ -187,7 +207,7 @@ router.get("/books/patrons/patron_details/:library_id", (req, res, next) => {
         });
 });
 router.put("/books/patrons/patron_details/:library_id", (req, res, next) => {
-    console.log(req.body);
+    //console.log(req.body);
     Patrons.findOne({
         where:{
            library_id : req.params.library_id 
@@ -204,16 +224,26 @@ router.put("/books/patrons/patron_details/:library_id", (req, res, next) => {
 })
 
 
-// router.put("/books/patrons/patron_details/:library_id", (req, res, next) => {
-//     console.log(req.body);
-//     Patrons.findById(req.params.id).then(function (patrons) {
-//         return patrons.update(req.body);
-//     }).then(function (patrons) {
-//         res.redirect("/books/patrons");
-//     }).catch(function(err){
-//         console.log(err)
-//     })
-// });
+// routing  put request for returned book
+router.put("/return/returned/:book_id", (req, res, next) =>{
+    console.log("whoopi");
+    Loans.findOne({
+        where:{
+           book_id : req.params.book_id 
+        }
+    }).then(function(loans){
+        return loans.update(req.body);
+
+    }).then(function (loans) {
+        res.redirect("/books/all_loans");
+    }).catch(function(err){
+        console.log(err)
+    })
+})
+
+
+
+
 
 // routing update loans table for new loan
 router.put("", (req, res, next) => {
