@@ -1,0 +1,27 @@
+extends layout.pug
+block content
+    body
+    h1 Overdue Books
+    p
+        a(href="/books/new" class="button") Create New Book
+    p Filters <a href="/books">All</a> | <a href="/books/overdue">Overdue</a> | <a href="/books/checked_books">Checked Out</a></p>
+    table
+        thead
+            tr
+                th Title
+                th Author
+                th Genre
+                th Year Released
+            
+        
+        tbody
+            -const overdueBooks = overdue
+            each overdueItem, index in overdueBooks
+                tr
+                    td
+                        a(href="/books/" + `${overdueBooks[index].book.id}`) #{overdueBooks[index].book.title}
+                    td #{overdueBooks[index].book.author}
+                    td #{overdueBooks[index].book.genre}
+                    td #{overdueBooks[index].book.first_published}
+            
+            

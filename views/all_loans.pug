@@ -5,10 +5,7 @@ block content
     h1 Loans
     p
         a(href="/new_loan" class="button") Create New Loan
-    p Filters 
-        a(href="/books/all_loans") All 
-        a(href="overdue_loans.html") Overdue 
-        a(href="checked_loans.html") Checked Out
+    p Filters <a href="/books" > All </a> | <a href="/books/overdue"> Overdue</a> | <a href="/books/checked_books"> Checked Out</a></p>
     table
         thead
             tr
@@ -39,5 +36,5 @@ block content
                     td  #{moment(itemreturnby).format("YYYY-MM-DD")}
                     td  #{moment(itemreturnedon).format("YYYY-MM-DD")}
                     td
-                        a(href="return_book.html" class="button") Return Book
+                        a(href="/return/" + `${itembookid}` class="button") Return Book
                 

@@ -2,15 +2,8 @@ extends layout.pug
 block content  
     body    
         h1 #{pagetitle}
-        a(class="button" href="/new_loan") Create New Book
-        nav
-            ul
-                li 
-                    a(href="/books") All
-                li 
-                    a(href="/books/overdue") Overdue
-                li 
-                    a(href="/books/checked_out") Checked Out
+        a(class="button" href="/books/new") Create New Book
+        p Filters <a href="/books" > All </a> | <a href="/books/overdue"> Overdue</a> | <a href="/books/checked_books"> Checked Out</a></p>
                 table
                     tr  
                         th Book Title

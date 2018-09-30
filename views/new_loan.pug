@@ -2,30 +2,33 @@ extends layout.pug
 block content  
     body
         h1 New Loan
-        form(action="/" method="post")
+        -let blobby
+         //form(action="/loans/new_loan_update/" + `${newloan[0].dataValues.id}` + "?_method=PUT" method="post")
+         form(action="/loans/new_loan_update" method="post")
+
             P 
                 label(for="book_id") Book
-                select(id="book_id")
+                select(id="book_id" name="book_id")
                     - const newLoanBk = newloan;
                         each newloanitem, index in newLoanBk
                             - let newloantitle = newLoanBk[index].dataValues.title
-                                option(value="1") #{newloantitle}
+                                option(value=newloan[index].dataValues.id) #{newloantitle}
             p
                 label(for="patron_id") Patron
-                select(id="patron_id")
+                select(id="patron_id" name="patron_id")
                     - const newLoanPatron = newloanP;
                         each newPatronitem, index in newLoanPatron
-                            - let newloanPatronfullname = newLoanPatron[index].dataValues.first_name + " "+ newLoanPatron[index].dataValues.last_name
-                                option(value="1") #{newloanPatronfullname}
+                            - let newLoanPatronFullName = newLoanPatron[index].dataValues.first_name + " "+ newLoanPatron[index].dataValues.last_name
+                                option(value=newloanP[index].dataValues.id) #{newLoanPatronFullName}
             p
                 label(for="loaned_on") Loaned on:
-                - let dateloanedon = momemt().format("ddd MMM  DD  YYYY HH:mm:ss")
-                - let fulldate= dateloanedon +" GMT-700 (PDT)"
-                -let returndate = momemt().add(7,'d').format("ddd MMM  DD  YYYY HH:mm:ss")
-                input(id="loaned_on" type="text" value= fulldate )
+                - let dateLoanedOn = moment.utc()
+                // let fulldate= dateloanedon +" GMT-700 (PDT)"
+                // -let returndate = moment().add(7,'d').format("ddd MMM  DD  YYYY")
+                input(id="loaned_on" name="loaned_on" type="text" value= dateLoanedOn.format("YYYY MM DD") )
             p
                 label(for="return_by") Return by:
-                input(id="return_by" type="text" value= returndate)
+                input(id="return_by" name="return_by" type="text" value= dateLoanedOn.add(7,'d').format("YYYY MM DD"))
             p
                 input(type="submit" value="Create New Loan")
     

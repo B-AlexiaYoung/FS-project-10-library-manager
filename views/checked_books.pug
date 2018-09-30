@@ -2,3 +2,24 @@ extends layout.pug
 block content    
     body
     h1 Checked Out Books
+    p  
+        a(href="/books/new" class="button") Create New Book
+    p   Filters <a href="/books" > All </a> | <a href="/books/overdue"> Overdue</a> | <a href="/books/checked_books"> Checked Out</a></p>
+    table
+        thead
+            tr
+                th Title
+                th Author
+                th Genre
+                th Year Released
+            
+        thead
+        tbody
+            -const checkedDetails = checkedout
+            each checkedItem, index in checkedDetails
+                tr
+                    td
+                        a(href="/books/" + `${checkedDetails[index].book.id}`) #{checkedDetails[index].book.title}
+                    td #{checkedDetails[index].book.author}
+                    td #{checkedDetails[index].book.genre}
+                    td #{checkedDetails[index].book.first_published}

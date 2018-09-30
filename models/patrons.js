@@ -2,7 +2,9 @@
 module.exports = (sequelize, DataTypes) => {
   const patrons = sequelize.define('patrons', {
     id: {
-      type: DataTypes.INTEGER, primaryKey: true
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
     },
     first_name:  {
       type: DataTypes.STRING,

@@ -1,11 +1,15 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const loans = sequelize.define('loans', {
-    id: {type: DataTypes.INTEGER, primaryKey: true,  allowNull:false},
+    id: {type: DataTypes.INTEGER,
+       primaryKey: true,
+      },
     book_id:{type: DataTypes.INTEGER, allowNull:false},
     patron_id: {
       type: DataTypes.INTEGER,
       allowNull:false,
+
+
       validate: {
         notEmpty: {
           msg: "Patron id is required"
@@ -33,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     returned_on: {
       type:DataTypes.DATE,  
-      allowNull:false},
+      },
   }, {
     // don't add the timestamp attributes (updatedAt, createdAt)
     timestamps: false,
