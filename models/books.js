@@ -16,20 +16,20 @@ module.exports = (sequelize, DataTypes) => {
 
     author:{type:DataTypes.STRING,
             allowNull:false,
-            // validate:{
-            //   notEmpty:{
-            //     msg: "Author is required"
-            //   }
-            //  }
+            validate:{
+              notEmpty:{
+                msg: "Author is required"
+              }
+             }
            },
 
     genre: {type:DataTypes.STRING,
            allowNull:false,
-          //  validate:{
-          //   notEmpty:{
-          //     msg: "Genre is required"
-          //   }
-          // }
+           validate:{
+            notEmpty:{
+              msg: "Genre is required"
+            }
+          }
            },
 
     first_published: {type:DataTypes.INTEGER,

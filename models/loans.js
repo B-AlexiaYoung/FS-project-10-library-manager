@@ -20,23 +20,28 @@ module.exports = (sequelize, DataTypes) => {
     loaned_on: {
       type:DataTypes.DATE,
       allowNull:false,
-      // validate: {
-      //   notEmpty: {
-      //     msg: "Loaned on  is required"
-      //   }
-      // }
+      validate: {
+        notEmpty: {
+          msg: "Loaned on is required"
+        }
+      }
     },
     return_by:{
       type: DataTypes.DATE,  
       allowNull:false,
-      // validate: {
-      //   notEmpty: {
-      //     msg: "Return by is required"
-      //   }
-      // }
+      validate: {
+        notEmpty: {
+          msg: "Return by is required"
+        }
+      }
     },
     returned_on: {
       type:DataTypes.DATE,  
+      validate: {
+        notEmpty: {
+          msg: "Returned on is required"
+        }
+      }
       },
   }, {
     // don't add the timestamp attributes (updatedAt, createdAt)

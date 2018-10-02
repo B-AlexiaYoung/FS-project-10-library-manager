@@ -1,19 +1,20 @@
 extends layout.pug
 block content  
+    include error.pug
     body    
         h1  New Book
         form( action="./create_new_book" method="post")  
             p
                 label(for="bkTitle") Book Title
-                input(id="bkTitle" name= "title" type="text" )
+                input( id="bkTitle" name= "title" type="text" value=book.title ) 
             p
                 label(for="author") Author
-                input(id= "author" name ="author" type="text" required) 
+                input(id= "author" name ="author" type="text" value=book.author) 
             p     
                 label(for="gnr") Genre
-                input(id = "gnr" name="genre" type="text" required)  
+                input(id = "gnr" name="genre" type="text" value=book.genre)  
             p   
                 label(for="firstPub") First Published
-                input(id="firstPub" name="first_published" type="number" )
+                input(id="firstPub" name="first_published" type="number" value=book.first_published)
 
             input(type="submit" value="Create New Book")

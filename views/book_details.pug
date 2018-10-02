@@ -1,19 +1,19 @@
 extends layout.pug
 block content 
-    
+    include error.pug   
     body
         h1  #{title}
         //- const singleBook = bookinfo
         form( action="/books/update/" + `${bkloan.id}` + "?_method=PUT" method="post")  
             label(for="title") Book Title
-            input(id="title" name= "title" type="text" value = `${bkloan.title}` required) 
+            input(id="title" name= "title" type="text" value = `${bkloan.title}`) 
             p
                 label(for="author") Author
-                a(href="/patrons/" + `${bkloan.id}`)
-                    input(id= "author" name ="author" type="text" value = `${bkloan.author}` required) 
+                //a(href="/patrons/" + `${bkloan.id}`)
+                input(id= "author" name ="author" type="text" value = `${bkloan.author}`) 
             p     
                 label(for="genre") Genre
-                input(id = "genre" name="genre" type="text" value =`${bkloan.genre}` required)  
+                input(id = "genre" name="genre" type="text" value =`${bkloan.genre}`)  
             p   
                 label(for="first_published") First Published
                 input(id="first_published" name="first_published" type="number" value=`${bkloan.first_published}`  )
@@ -36,23 +36,24 @@ block content
 
 
                 tr
-                td
-                    a(href="#") #{bkloan.title}   
-                - const getfromloans = bkloan.dataValues.loans
+               
+                - const getfromloans = loanHistory
                 
                 //- console.log(getfromloans)
                 each getfrom, index in getfromloans
                     //- fullName = getfrom.dataValues.patrons.dataValues.first_name
-                    - let fullName = getfrom.dataValues.patron.dataValues.first_name + " " + getfrom.dataValues.patron.dataValues.last_name
-                    - let loanedOn = getfrom.dataValues.loaned_on
-                    - let returnBy = getfrom.dataValues.return_by
-                    - let returnedOn = getfrom.dataValues.returned_on
 
+                    - let fullName = getfromloans[0].patron.first_name + " " + getfromloans[index].patron.last_name
+                    - let loanedOn = getfromloans[0].loaned_on
+                    - let returnBy = getfromloans[0].return_by
+                    - let returnedOn = getfromloans[0].returned_on
+                    td
+                        a(href="#") #{getfrom.book.title}   
                     td  
-                        a(href="patrons/patron_details/"+ `${getfrom.dataValues.patron.dataValues.library_id}` ) #{fullName}
+                        a(href="patrons/patron_details/"+ `${getfromloans[0].patron.library_id}` ) #{fullName}
                     td  #{moment(loanedOn).format("YYYY-MM-DD")} 
                     td  #{moment(returnBy).format("YYYY-MM-DD")}
-                    if returned = null
+                    if returnedOn = null
                         td  |
                     else 
                         td #{moment(returnedOn).format("YYYY-MM-DD")}
