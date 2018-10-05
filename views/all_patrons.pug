@@ -18,7 +18,9 @@ block content
             each libpatron in librarypatron
                 tr
                     td
-                        a(href="/books/patrons/patron_details/"+ `${libpatron.library_id}`) #{libpatron.first_name} #{libpatron.last_name}
+                       // a(href="/books/patrons/patron_details/"+ `${libpatron.library_id}`) #{libpatron.first_name} #{libpatron.last_name}
+                       a(href="/books/patrons/patron_details/"+ `${libpatron.id}`) #{libpatron.first_name} #{libpatron.last_name}
+
                     td  #{libpatron.address}
                     td  #{libpatron.email}
                     td  #{libpatron.library_id}

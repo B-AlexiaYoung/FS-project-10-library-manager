@@ -8,51 +8,52 @@ module.exports = (sequelize, DataTypes) => {
     },
     first_name:  {
       type: DataTypes.STRING,
-      // validate: {
-      //   notEmpty: {
-      //     msg: "First name is required"
-      //   }
-      // }
+      validate: {
+        notEmpty: {
+          msg: "First name is required"
+        }
+      }
     },
     last_name:{
       type: DataTypes.STRING,
-      // validate: {
-      //   notEmpty: {
-      //     msg: "Last name is required"
-      //   }
-      // }
+      validate: {
+        notEmpty: {
+          msg: "Last name is required"
+        }
+      }
     },
     address:{
       type: DataTypes.STRING,
-      // validate: {
-      //   notEmpty: {
-      //     msg: "Address is required"
-      //   }
-      // }
+      validate: {
+        notEmpty: {
+          msg: "Address is required"
+        }
+      }
     },
     email:{
       type: DataTypes.STRING,
-      // validate: {
-      //   notEmpty: {
-      //     msg: "Email is required"
-      //   }
-      // }
+      validate: {
+        notEmpty: {
+          msg: "Email is required"
+        }
+      }
     },
     library_id:{ 
       type:DataTypes.STRING,
-      // validate: {
-      //   notEmpty: {
-      //     msg: "Library id is required"
-      //   }
-      // }
+      validate: {
+        notEmpty: {
+          msg: "Library id is required"
+        }
+      }
     },
     zip_code: {
       type:DataTypes.INTEGER,
-    //   validate: {
-    //     notEmpty: {
-    //       msg: "Zipcode is required"
-    //     }
-    //   }
+      validate: {
+        notEmpty: {
+          msg: "Zip code is required"
+        }
+      }
+      
      }
   }, {
     // don't add the timestamp attributes (updatedAt, createdAt)

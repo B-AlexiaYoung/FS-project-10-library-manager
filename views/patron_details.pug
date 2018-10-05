@@ -1,27 +1,30 @@
 extends layout.pug
 block content  
-
+    include error.pug
     body
         h1 Patron: #{customer.first_name} #{customer.last_name} 
-        form(action="/books/patrons/patron_details/" +`${customer.library_id}` + "?_method=PUT" method="post")
+        //form(action="/books/patrons/patron_details/" +`${customer.library_id}` + "?_method=PUT" method="post")
+        form(action="/books/patrons/patron_details/" +`${customer.id}` + "?_method=PUT" method="post")
+
             p 
                 label(for="first_name") First Name
-                input(id="first_name" name="first_name" type="text" value=customer.first_name required) 
+                input(id="first_name" name="first_name" type="text" value=customer.first_name
+                ) 
             p
                 label(for="last_name") Last Name
-                input(id="last_name" name="last_name" type="text" value=customer.last_name required) 
+                input(id="last_name" name="last_name" type="text" value=customer.last_name) 
             p
                 label(for="address") Address
-                input(id="address" name="address" type="text" value=customer.address required)
+                input(id="address" name="address" type="text" value=customer.address)
             p
                 label(for="email") Email
-                input(id="email" name="email" type="text" value=customer.email required)
+                input(id="email" name="email" type="text" value=customer.email)
             p
                 label(for="library_id") Library Id
-                input(id="library_id" name="library_id" type="text" value=customer.library_id required)  
+                input(id="library_id" name="library_id" type="text" value=customer.library_id)  
             p
                 label(for="zip_code") Zip Code
-                input(id="zip_code" name="zip_code" type="text" value=customer.zip_code required)
+                input(id="zip_code" name="zip_code" type="text" value=customer.zip_code)
             
             input(type="submit" value="Update")
 
@@ -36,24 +39,33 @@ block content
                     th Returned on
                     th Action
             tbody
-            - const getdetailsloans = customer.dataValues.loans
+            //- const getdetailsloans = customer.dataValues.loans
+            - const getDetailsLoans = custHistory
 
                 tr
-                each detail, index in getdetailsloans
-                    -let customerbookid = customer.loans[index].dataValues.book_id
-                    -let customerfullname = customer.first_name +" "+ customer.last_name
-                    -let customerloanedon = customer.loans[index].dataValues.loaned_on
-                    -let customereturnby = customer.loans[index].dataValues.return_by
+                each detail, index in getDetailsLoans
+                    //- -let customerbookid = customer.loans[index].dataValues.book_id
+                    //- -let customerfullname = customer.first_name +" "+ customer.last_name
+                    //- -let customerloanedon = customer.loans[index].dataValues.loaned_on
+                    //- -let customereturnby = customer.loans[index].dataValues.return_by
+                    -let customerBookid = custHistory[index].book_id
+                    -let customerFullName = customer.first_name +" "+ customer.last_name
+                    -let custHistoryLoanedOn= custHistory[index].loaned_on
+                    -let custHistoryReturnBy = custHistory[index].return_by
                         td
-                            a(href="/books/"+ customerbookid) #{customerbookid}
+                            a(href="/books/"+ customerBookid) #{customerBookid}
                         td
-                            a(href="#") #{customerfullname}
-                        td #{customerloanedon}
-                        td #{customereturnby}
+                            a(href="#") #{customerFullName}
+                        //td #{customerloanedon}
+                        td #{moment(custHistoryLoanedOn).format("YYYY-MM-DD")}
+                        //td #{customerreturnby}
+                        td #{moment(custHistoryReturnBy).format("YYYY-MM-DD")}
                         td
-                        if(customerloandon)
+                        //if(customerloandon)
+                        if(custHistoryLoandOn)
+
                         td
-                            a(href="/return/" + customerbookid class="button") Return Book
+                            a(href="/return/" + customerBookid class="button") Return Book
                         
                         tr
                 

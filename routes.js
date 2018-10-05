@@ -25,6 +25,20 @@ router.get("/books", (req, res) => {
 
 });
 
+// // routing all books  with pagination   just starting to work on this
+// router.get("/books", (req, res) => {
+//     let limit= 5;
+//     let offset= 0;
+//     Books.findAndCountAll().then(function (books) {
+//         //console.log(books);
+//         res.render("all_books", {
+//             bookinfo: books,
+//             pagetitle: "All Books"
+//         });
+//     })
+
+});
+
 // routing overdue books
 router.get("/books/overdue", (req, res) => {
     Loans.findAll({
@@ -118,13 +132,15 @@ router.get("/new_loan", (req, res) => {
                 .then(function (patrons) {
                     //console.log(books)
                     //console.log(patrons[0].dataValues.first_name);
-                    //console.log(books[0].dataValues.loans);
+                    console.log(books[21].loans);
                     //console.log(patrons)
                     res.render("new_loan", {
                         newloan: books,
                         moment,
                         newloanP: patrons,
                         moment
+
+
                     });
                 })
         })
@@ -176,7 +192,7 @@ router.get("/new_patron", (req, res) => {
     res.render("new_patron");
 })
 
-// add new book
+//routing post-  add new book
 router.post("/books/create_new_book", function (req, res, next) {
     //console.log(req.body);
     Books.create(req.body)
@@ -202,14 +218,15 @@ router.post("/books/create_new_book", function (req, res, next) {
         })
 
 })
-// add new patron
+// routing post- add new patron
 router.post("/patrons/create_new_patron", function (req, res, next) {
     //console.log(req.body);
     Patrons.create(req.body)
         .then(res.redirect('/patrons'))
-        .catch(function (err) {
-            console.log(err);
-            // return res.status(422).send(err.errors);
+        .catch(function (error) {
+            if (error.name === "SequelizeValidationError") {
+
+            }//end if
         })
 
 })
@@ -254,57 +271,49 @@ router.post("/patrons/create_new_patron", function (req, res, next) {
 
 //routing individual book, book-details
 router.get("/books/:id", (req, res) => {
-    //console.log(req.params); 
     //console.log(req.params.id)
-    //console.log(req);
     let bk = req.params.id;
-
-    //console.log(bk);
-    // Books.findById(bk, {include:[{
     Books.findOne({
-
+   where: {
+        id: req.params.id
+    },
+    })
+    .then(function (books) {
+        //console.log(books.dataValues.loans[0].dataValues.patron.dataValues.first_name)
+        //let book=books;
+        Loans.findAll({
+            include: [{
+                    model: Books
+                },
+                {
+                    model: Patrons
+                }
+            ],
             where: {
-                id: req.params.id
-            },
-
+                book_id: req.params.id,
+            }
         })
-
-        .then(function (books) {
+        //res.render("book_details", {bKloan: books});
+        //})
+        .then(function (loans) {
             //console.log(books.dataValues.loans[0].dataValues.patron.dataValues.first_name)
-            //let book=books;
-            Loans.findAll({
-                    include: [{
-                            model: Books
-                        },
-                        {
-                            model: Patrons
-                        }
-                    ],
-                    where: {
-                        book_id: req.params.id,
-                    }
-                })
-                //res.render("book_details", {bKloan: books});
-                //})
-                .then(function (loans) {
-                    //console.log(books.dataValues.loans[0].dataValues.patron.dataValues.first_name)
-                    console.log(loans);
-                    res.render("book_details", {
-                        bkloan: books,
-                        loanHistory: loans,
-                        moment,
-                        bk,
-                    })
-                    //res.render("book_details", {bKloan: books});
-                })
+            //console.log(loans);
+            res.render("book_details", {
+                bkloan: books,
+                loanHistory: loans,
+                moment,
+                bk,
+            })
+            //res.render("book_details", {bKloan: books});
         })
+    })
 });
 
 
-// update 'put' to update individual book information 
+//routing update 'put' to update individual book information 
 router.put("/books/update/:id", (req, res, next) => {
     Books.findById(req.params.id).then(function (books) {
-            return books.update(req.body);
+        return books.update(req.body);
         }).then(function (books) {
             res.redirect("/books");
         })
@@ -323,13 +332,13 @@ router.put("/books/update/:id", (req, res, next) => {
                     }
                 }).then(function (loans) {
 
-                    console.log(loans[0]);
-                    console.log(Books.build(req.body));
+                    // console.log(loans[0]);
+                    // console.log(Books.build(req.body));
                     let bookUpdate = Books.build(req.body);
                     let bookerror = error.errors
                     bookUpdate.id = req.params.id;
                     //console.log(bookUpdate);
-                    console.log(bookUpdate.title);
+                    //console.log(bookUpdate.title);
                     //res.redirect("/books/17")
                     res.render("book_details", {
                         bkloan: bookUpdate,
@@ -347,53 +356,125 @@ router.put("/books/update/:id", (req, res, next) => {
 });
 
 
-//routing individual customer details
-router.get("/books/patrons/patron_details/:library_id", (req, res, next) => {
-    //let singlePatron = req.params.patron_id
-    Patrons.findOne({
-            include: [{
-                model: Loans,
-            }],
-            where: {
-                library_id: req.params.library_id
-            },
+//routing get individual customer details   first draft
+// router.get("/books/patrons/patron_details/:library_id", (req, res, next) => {
+//     //let singlePatron = req.params.patron_library_id
+//     Patrons.findOne({
+//         include: [{
+//             model: Loans,
+//         }],
+//         where: {
+//            library_id: req.params.library_id
+//         },
+//         })
+//         .then(function (patrons) {
+//             console.log(patrons.dataValues)
+//             //console.log(patrons.dataValues.loans[0].dataValues.book_id);
+//             //let loanDetails = patrons.dataValues.loans[0].dataValues
+//             res.render("patron_details", {
+//                 customer: patrons
+//             })
+//         });
+// });
 
-        })
-        .then(function (patrons) {
+
+//routing get individual customer details  second draft
+
+router.get("/books/patrons/patron_details/:id", (req, res, next) => {
+    let singlePatron = req.params.id
+    //console.log(singlePatron);
+    Patrons.findOne({
+            where: {
+            id: req.params.id
+        },
+        }).then(function (patrons){
+            Loans.findAll({
+                where:{
+                    patron_id: singlePatron
+                }
+            }).then(function (loans) {
+            //  console.log(loans);
             //console.log(patrons.dataValues)
             //console.log(patrons.dataValues.loans[0].dataValues.book_id);
             //let loanDetails = patrons.dataValues.loans[0].dataValues
-
             res.render("patron_details", {
-                customer: patrons
+                customer: patrons,
+                custHistory: loans,
+                moment
             })
-        });
+        })
+     })
 });
 
-//routing patron update?
-router.put("/books/patrons/patron_details/:library_id", (req, res, next) => {
+// //routing   put patron update
+// router.put("/books/patrons/patron_details/:library_id", (req, res, next) => {
+//     //console.log(req.body);
+//     Patrons.findOne({
+//         where: {
+//             library_id: req.params.library_id
+//         }
+//     }).then(function (patrons) {
+//         return patrons.update(req.body);
+
+//     }).then(function (patrons) {
+//         res.redirect("/patrons");
+//     }).catch(function (err) {
+//         console.log(err)
+//     })
+
+// })
+
+//routing   put patron update
+router.put("/books/patrons/patron_details/:id", (req, res, next) => {
     //console.log(req.body);
+    let patronId;
     Patrons.findOne({
         where: {
-            library_id: req.params.library_id
+            id: req.params.id
         }
     }).then(function (patrons) {
+        console.log(patrons.id)
+         patronId =patrons.id;
         return patrons.update(req.body);
-
+        
     }).then(function (patrons) {
         res.redirect("/patrons");
-    }).catch(function (err) {
-        console.log(err)
-    })
+    }).catch(function(error){
 
+        if (error.name === "SequelizeValidationError") {
+            Loans.findAll({
+                where: {
+                    patron_id: patronId,
+                }
+            
+            }).then(function (loans) {
+                    console.log("wibble");
+                    console.log(loans);
+                    // console.log(Patrons.build(req.body));
+                    let customerUpdate = Patrons.build(req.body);
+                    let customerError = error.errors
+                    customerUpdate.id = req.params.id;
+                    //console.log(customerUpdate.title);
+                    res.render("patron_details", {
+                        customer: customerUpdate,
+                        errors: customerError,
+                        custHistory: loans,
+                        moment
+                    })
+                })
+        }//end if
+    })
 })
 
 
+
 // routing  put request for returned book
-router.put ( "/return/returned/:book_id", (req, res, next) => {
+router.put("/return/returned/:book_id", (req, res, next) => {
     //console.log("whoopi");
     Loans.findOne({
-        where: {book_id: req.params.book_id }
+        where: {
+            book_id: req.params.book_id
+        }
     }).then(function (loans) {
         return loans.update(req.body);
 
@@ -402,33 +483,73 @@ router.put ( "/return/returned/:book_id", (req, res, next) => {
     }).catch(function (error) {
         if (error.name === "SequelizeValidationError") {
             Loans.findOne({
-                include: [{ model: Books },{ model: Patrons}],
-                where: { book_id: req.params.book_id, } 
-             }).then(function (loans) {
-                    console.log(req.body);
-                    res.render('return', {loanreturn: loans, errors: error.errors, moment})
-            }).catch(function (error) {
-            console.log(error);
-        })
-    }//end if 
-})
-})
-
-
-
-
-
-            // routing update loans table for new loan
-            router.post("/loans/new_loan_update", (req, res, next) => {
+                include: [{
+                    model: Books
+                }, {
+                    model: Patrons
+                }],
+                where: {
+                    book_id: req.params.book_id,
+                }
+            }).then(function (loans) {
                 console.log(req.body);
-
-                Loans.create(req.body)
-
-                    .then(res.redirect('/books/all_loans'))
-                    .catch(function (err) {
-                        console.log(err);
-                        // return res.status(422).send(err.errors);
-                    })
+                res.render('return', {
+                    loanreturn: loans,
+                    errors: error.errors,
+                    moment
+                })
+            }).catch(function (error) {
+                console.log(error);
             })
+        } //end if 
+    })
+})
 
-            module.exports = router;
+
+
+
+
+// routing update loans table for new loan
+router.post("/loans/new_loan_update", (req, res, next) => {
+    console.log(req.body);
+    let checkLoan= req.body;
+    checkLoan.returned_on = null;
+    Loans.create(checkLoan)
+
+        .then(function (loans) {
+            res.redirect('/books/all_loans')
+        })
+        .catch(function (error) {
+            let noDate = error.errors
+            if (error.name === "SequelizeValidationError") {
+                Books.findAll({
+                        include:
+
+                        {
+                            model: Loans
+                        },
+                    })
+                    .then(function (books) {
+                        console.log(noDate);
+                        console.log(books[0]);
+                        Patrons.findAll()
+                            .then(function (patrons) {
+                                res.render("new_loan", {
+                                    newloan: books,
+                                    moment,
+                                    newloanP: patrons,
+                                    moment,
+                                    errors: noDate
+
+
+                                });
+                            })
+                    })
+
+            } //end if
+        })
+})
+
+
+//===============================
+module.exports = router;

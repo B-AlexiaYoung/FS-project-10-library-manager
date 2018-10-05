@@ -1,18 +1,25 @@
 extends layout.pug
 block content  
+    include error.pug
     body
         h1 New Loan
-        -let blobby
          //form(action="/loans/new_loan_update/" + `${newloan[0].dataValues.id}` + "?_method=PUT" method="post")
          form(action="/loans/new_loan_update" method="post")
 
             P 
                 label(for="book_id") Book
                 select(id="book_id" name="book_id")
-                    - const newLoanBk = newloan;
+                    - const newLoanBk = newloan;    
                         each newloanitem, index in newLoanBk
-                            - let newloantitle = newLoanBk[index].dataValues.title
-                                option(value=newloan[index].dataValues.id) #{newloantitle}
+                            if newLoanBk[index].loans[0] !== undefined
+                                -let blobby = newLoanBk[index].loans.length - 1
+                                if  newLoanBk[index].loans[blobby].returned_on !== null
+                                    - let newloantitle = newLoanBk[index].dataValues.title
+                                        option(value=newloan[index].dataValues.id) #{newloantitle}
+                            if newLoanBk[index].loans[0] === undefined
+                                - let newloantitle = newLoanBk[index].dataValues.title
+                                    option(value=newloan[index].dataValues.id) #{newloantitle}
+                            
             p
                 label(for="patron_id") Patron
                 select(id="patron_id" name="patron_id")
