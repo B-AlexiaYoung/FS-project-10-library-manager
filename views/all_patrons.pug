@@ -1,29 +1,35 @@
 extends layout.pug
 block content    
-   body
-    h1 Patrons
+    form(action="/searchbooks" method="post")
+        br
+        input(class="searchStyle" name="search" type="text" placeholder="search here")   
+        input(type="submit" value="search")
+    body
+    h1 #{page}
     p
         a(href="/new_patron" class="button") Create New Patron
     table
-        head
-            tr
-                th Name 
-                th Address
-                th Email
-                th Library ID
-                th Zip
+        tr
+            th Name 
+            th Address
+            th Email
+            th Library ID
+            th Zip
            
-        tbody
-            -const librarypatron = patroninfo
-            each libpatron in librarypatron
-                tr
-                    td
-                       // a(href="/books/patrons/patron_details/"+ `${libpatron.library_id}`) #{libpatron.first_name} #{libpatron.last_name}
-                       a(href="/books/patrons/patron_details/"+ `${libpatron.id}`) #{libpatron.first_name} #{libpatron.last_name}
+        -const librarypatron = patroninfo
+        each libpatron in librarypatron
+            tr
+            
+                td
+                    // a(href="/books/patrons/patron_details/"+ `${libpatron.library_id}`) #{libpatron.first_name} #{libpatron.last_name}
+                    a(href="/books/patrons/patron_details/"+ `${libpatron.id}`) #{libpatron.first_name} #{libpatron.last_name}
 
-                    td  #{libpatron.address}
-                    td  #{libpatron.email}
-                    td  #{libpatron.library_id}
-                    td  #{libpatron.zip_code}
-                
+                td  #{libpatron.address}
+                td  #{libpatron.email}
+                td  #{libpatron.library_id}
+                td  #{libpatron.zip_code}
+            tr
+            tr
+            
                
+    include pagination.pug

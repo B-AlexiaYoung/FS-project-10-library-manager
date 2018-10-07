@@ -49,11 +49,12 @@ block content
                     //- -let customerloanedon = customer.loans[index].dataValues.loaned_on
                     //- -let customereturnby = customer.loans[index].dataValues.return_by
                     -let customerBookid = custHistory[index].book_id
+                    -let customerBookTitle = custHistory[index].book.title
                     -let customerFullName = customer.first_name +" "+ customer.last_name
                     -let custHistoryLoanedOn= custHistory[index].loaned_on
                     -let custHistoryReturnBy = custHistory[index].return_by
                         td
-                            a(href="/books/"+ customerBookid) #{customerBookid}
+                            a(href="/books/details/"+ customerBookid) #{customerBookTitle}
                         td
                             a(href="#") #{customerFullName}
                         //td #{customerloanedon}

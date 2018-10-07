@@ -25,13 +25,15 @@ block content
                 - let itemreturnby = bookloaned[index].dataValues.return_by
                 - let itemreturnedon = bookloaned[index].dataValues.returned_on
                 - let itembookid = bookloaned[index].book_id
-                - let itemlibraryid = bookloaned[index].dataValues.patron.dataValues.library_id
+                //- let itemlibraryid = bookloaned[index].dataValues.patron.dataValues.library_id
+                - let itemid = bookloaned[index].dataValues.patron.dataValues.id
+
 
                 tr
                     td
-                        a(href="/books/" + `${itembookid}`) #{itemtitle}
+                        a(href="/books/details/" + `${itembookid}`) #{itemtitle}
                     td
-                        a(href="/books/patrons/patron_details/" + `${itemlibraryid}`) #{itemcustomer}
+                        a(href="/books/patrons/patron_details/" + `${itemid}`) #{itemcustomer}
                     td #{moment(itemloanedon).format("YYYY-MM-DD")} 
                     td  #{moment(itemreturnby).format("YYYY-MM-DD")}
                     if itemreturnedon !== null

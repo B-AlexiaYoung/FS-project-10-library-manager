@@ -19,7 +19,7 @@ block content
             each checkedItem, index in checkedDetails
                 tr
                     td
-                        a(href="/books/" + `${checkedDetails[index].book.id}`) #{checkedDetails[index].book.title}
+                        a(href="/books/details/" + `${checkedDetails[index].book.id}`) #{checkedDetails[index].book.title}
                     td #{checkedDetails[index].book.author}
                     td #{checkedDetails[index].book.genre}
                     td #{checkedDetails[index].book.first_published}

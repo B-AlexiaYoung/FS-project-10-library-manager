@@ -19,7 +19,7 @@ block content
             each overdueItem, index in overdueBooks
                 tr
                     td
-                        a(href="/books/" + `${overdueBooks[index].book.id}`) #{overdueBooks[index].book.title}
+                        a(href="/books/details/" + `${overdueBooks[index].book.id}`) #{overdueBooks[index].book.title}
                     td #{overdueBooks[index].book.author}
                     td #{overdueBooks[index].book.genre}
                     td #{overdueBooks[index].book.first_published}

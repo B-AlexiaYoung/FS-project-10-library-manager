@@ -1,1 +1,18 @@
-ul
+- let prev = "prev"
+- let next = "next"
+- let count = 0
+- let goPrev = count - 1
+- let goNext = count + 1
+
+- let prevPage = count - 1
+//- - if prevPage !<= 0
+//-     a(href="" + goPrev) #{prev}
+div
+    ul(class= "wrapperPages")
+        - for (let i =1; i<=paginate; i++)
+            - count = i
+            li(class="pages")
+                a(href="" + i) #{i}
+- let nextPage = count + 1
+//- - if nextPage !> paginate
+//-     a(href="" + goNext) #{next}

@@ -23,6 +23,7 @@ form a.button, input[type=submit] {
   margin-left: 140px;
 }
 input[type=submit] {
+  margin-left: 10px;  /* added*/
   border: 0;
 }
   a.button:hover, input[type=submit]:hover {
@@ -97,6 +98,23 @@ input {
 input[type=text], select {
   margin-left: 10px;
 }
-.error{
-  color:red;
+
+/* added styles  */
+.wrapperPages{
+  margin: 0 auto;
+  width: 20%;
+}
+.pages{
+  display:inline-block;
+  margin-top: 10px;
+  margin: 5px;
+  border : 1px solid #01b189;
+  padding : 7px;
+  box-shadow: 1px 1px  #01b189;
+
+
+}
+.searchStyle{
+  width:30em;
+  border:1px solid #01b189
 }

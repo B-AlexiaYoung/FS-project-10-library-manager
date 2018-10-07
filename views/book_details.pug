@@ -50,7 +50,7 @@ block content
                     td
                         a(href="#") #{getfrom.book.title}   
                     td  
-                        a(href="patrons/patron_details/"+ `${getfromloans[0].patron.library_id}` ) #{fullName}
+                        a(href="../patrons/patron_details/"+ `${getfromloans[0].patron.id}` ) #{fullName}
                     td  #{moment(loanedOn).format("YYYY-MM-DD")} 
                     td  #{moment(returnBy).format("YYYY-MM-DD")}
                     if returnedOn = null
