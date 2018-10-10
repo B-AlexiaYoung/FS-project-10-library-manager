@@ -38,6 +38,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     // don't add the timestamp attributes (updatedAt, createdAt)    
     timestamps: false,
+   
     underscored:true
     }
   );

@@ -3,6 +3,9 @@ const app = express();
 var bodyParser = require('body-parser');
 app.locals.momemt = require('moment');
 const override = require('method-override');
+const routesBooks = require("./routesBooks");
+const routesLoans = require("./routesLoans");
+const routesPatrons = require("./routesPatrons");
 
 // to be able to use put instead of post
 app.use(override('_method'))
@@ -14,8 +17,12 @@ app.set('view engine', 'pug');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const routes = require("./routes");
-app.use(routes);
+// const routes = require("./routes");
+// app.use(routes);
+
+app.use(routesPatrons);
+app.use(routesLoans);
+app.use(routesBooks);
 
 // app.use( (err,req,res,next)=>{
 //     console.log("error!");

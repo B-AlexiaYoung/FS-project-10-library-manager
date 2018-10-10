@@ -3,17 +3,18 @@ block content
     include error.pug
     body
         h1 Patron: Return Book
+        
         p <strong> Book Title: </strong> #{loanreturn.book.title}
                
         p <strong>Loaned By: </strong>#{loanreturn.patron.first_name}  #{loanreturn.patron.last_name}
                
-        p <strong> Loaned On: </strong> #{moment(loanreturn.loaned_on).format("YYYY-MM-DD")}
+        p <strong> Loaned On: </strong> #{moment(loanreturn.loaned_on).utc().format("YYYY-MM-DD")}
                
-        p <strong>  Return By: </strong> #{moment(loanreturn.return_by).format("YYYY-MM-DD")}
+        p <strong>  Return By: </strong> #{moment(loanreturn.return_by).utc().format("YYYY-MM-DD")}
         form(action="/return/returned/" +`${loanreturn.book_id}` + "?_method=PUT" method="post")
             p
                 label(for="returned_on") Returned on:
-                input(id="returned_on" name="returned_on" type="text" value= moment().format("YYYY-MM-DD") )
+                input(id="returned_on" name="returned_on" type="text" value= moment().utc().format("YYYY-MM-DD") )
             p
                 input(type="submit" value="Return Book")
     

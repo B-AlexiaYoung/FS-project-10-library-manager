@@ -1,11 +1,11 @@
 extends layout.pug
 block content    
-    form(action="/searchbooks" method="post")
+    form(action="/searchPatrons" method="post")
         br
         input(class="searchStyle" name="search" type="text" placeholder="search here")   
         input(type="submit" value="search")
     body
-    h1 #{page}
+    h1 All Patrons
     p
         a(href="/new_patron" class="button") Create New Patron
     table
@@ -22,7 +22,7 @@ block content
             
                 td
                     // a(href="/books/patrons/patron_details/"+ `${libpatron.library_id}`) #{libpatron.first_name} #{libpatron.last_name}
-                    a(href="/books/patrons/patron_details/"+ `${libpatron.id}`) #{libpatron.first_name} #{libpatron.last_name}
+                    a(href="/patrons/patron_details/"+ `${libpatron.id}`) #{libpatron.first_name} #{libpatron.last_name}
 
                 td  #{libpatron.address}
                 td  #{libpatron.email}

@@ -35,28 +35,35 @@ block content
 
 
 
-                tr
+                
                
                 - const getfromloans = loanHistory
                 
                 //- console.log(getfromloans)
                 each getfrom, index in getfromloans
                     //- fullName = getfrom.dataValues.patrons.dataValues.first_name
+                    tr
+                        - let fullName = getfromloans[0].patron.first_name + " " + getfromloans[index].patron.last_name
+                        - let loanedOn = getfromloans[0].loaned_on
+                        - let returnBy = getfromloans[0].return_by
+                        - let returnedOn = getfromloans[0].returned_on
+                        td
+                            //a(href="/books/details/" + `${getfromloans.book_id}`) #{getfrom.book.title} 
+                            a(href="#") #{getfrom.book.title}   
+    
+                        td  
+                            a(href="/patrons/patron_details/"+ `${getfromloans[0].patron.id}` ) #{fullName}
+                        td  #{moment(loanedOn).utc().format("YYYY-MM-DD")} 
+                        td  #{moment(returnBy).utc().format("YYYY-MM-DD")}
+                        if returnedOn !==  null
+                            td #{moment(returnedOn).utc().format("YYYY-MM-DD")}
+                        else
+                            td
+                        unless  returnedOn       
+                            td
+                                a(href="return/returned"+ getfromloans.id class="button") Return Book
 
-                    - let fullName = getfromloans[0].patron.first_name + " " + getfromloans[index].patron.last_name
-                    - let loanedOn = getfromloans[0].loaned_on
-                    - let returnBy = getfromloans[0].return_by
-                    - let returnedOn = getfromloans[0].returned_on
-                    td
-                        a(href="#") #{getfrom.book.title}   
-                    td  
-                        a(href="../patrons/patron_details/"+ `${getfromloans[0].patron.id}` ) #{fullName}
-                    td  #{moment(loanedOn).format("YYYY-MM-DD")} 
-                    td  #{moment(returnBy).format("YYYY-MM-DD")}
-                    if returnedOn = null
-                        td  |
-                    else 
-                        td #{moment(returnedOn).format("YYYY-MM-DD")}
-
-                td 
-                    a(href="return/returned"+ getfromloans.id class="button") Return Book
+                        
+                
+                    
+                    

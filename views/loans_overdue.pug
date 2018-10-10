@@ -1,0 +1,32 @@
+extends layout.pug
+block content
+
+    body
+        h1 Overdue Loans
+        p 
+            a(href="/new_loan" class="button") Create New Loan
+        p Filters <a href="/books/all_loans">All</a> | <a href="/overdue_loans">Overdue</a> | <a href="/checked_loans">Checked Out</a></p>
+        table
+            thead
+                tr
+                    th Book
+                    th Patron 
+                    th Loaned on
+                    th Return by 
+                    th Returned on
+                    th Action
+            tbody
+                - const odLoans = overdueLoans
+                each overdueLoanItem, index in odLoans
+                    - let odLoanBookID = odLoans[index].dataValues.book_id
+                    - let odLoanPatronID = odLoans[index].dataValues.patron_id
+                    tr
+                        td
+                            a(href="/books/details/" + odLoanBookID ) #{odLoans[index].dataValues.book.dataValues.title}
+                        td
+                            a(href="/patrons/patron_details/" + odLoanPatronID )  #{odLoans[index].dataValues.patron.first_name} #{odLoans[index].dataValues.patron.last_name}
+                        td #{odLoans[index].loaned_on}
+                        td #{odLoans[index].return_by}
+                        td #{odLoans[index].returned_on}
+                        td
+                            a(href="/return/" + "BOOK ID HERE" class="button") Return Book

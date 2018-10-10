@@ -1,0 +1,39 @@
+extends layout.pug
+block content     
+    
+    body
+        h1 Checked Out Books
+        p
+            a(href="/new_loan" class="button") Create New Loan
+        p Filters <a href="/books/all_loans">All</a> | <a href="/overdue_loans">Overdue</a> | <a href="/checked_loans">Checked Out</a>
+        table
+            thead
+                tr
+                    th Book
+                    th Patron
+                    th Loaned on
+                    th Return by 
+                    th Returned on
+                    th Action
+           
+            tbody
+                - const ckLoans = loansChecked
+                each checkedItem, index in ckLoans
+                    - let bookID =  ckLoans[index].dataValues.book_id
+                    - let patID = ckLoans[index].dataValues.patron_id
+                    tr
+                        td
+                            a(href="/books/details/" + bookID) #{ckLoans[index].dataValues.book.title}
+                        td 
+                            a(href="/patrons/patron_details/" + patID) #{ckLoans[index].dataValues.patron.first_name} #{ckLoans[index].dataValues.patron.last_name}
+                        td #{ckLoans[index].dataValues.loaned_on}
+                        td #{ckLoans[index].dataValues.return_by}
+                        if ckLoans[index].dataValues.returned_on !== null
+                            td returned on date
+                        else
+                            td
+                        td
+                            a(href="return_book.html" class="button") Return Book
+                    
+                    
+        

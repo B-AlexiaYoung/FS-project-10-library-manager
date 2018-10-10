@@ -1,3 +1,8 @@
+/* Working file for routes.  These have now been split into separate routes.
+HOME route is found in the routessbooks.js file.  I have decided to keep this for 
+my reference only*/
+
+
 const express = require('express');
 const router = express.Router();
 const Sequelize = require('sequelize');

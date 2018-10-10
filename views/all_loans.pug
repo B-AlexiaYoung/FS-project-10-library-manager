@@ -5,7 +5,7 @@ block content
     h1 Loans
     p
         a(href="/new_loan" class="button") Create New Loan
-    p Filters <a href="/books" > All </a> | <a href="/books/overdue"> Overdue</a> | <a href="/books/checked_books"> Checked Out</a></p>
+    p Filters <a href="/books/all_loans" > All </a> | <a href="/overdue_loans"> Overdue</a> | <a href="/checked_loans"> Checked Out</a></p>
     table
         thead
             tr
@@ -33,13 +33,14 @@ block content
                     td
                         a(href="/books/details/" + `${itembookid}`) #{itemtitle}
                     td
-                        a(href="/books/patrons/patron_details/" + `${itemid}`) #{itemcustomer}
-                    td #{moment(itemloanedon).format("YYYY-MM-DD")} 
-                    td  #{moment(itemreturnby).format("YYYY-MM-DD")}
+                        a(href="/patrons/patron_details/" + `${itemid}`) #{itemcustomer}
+                    td #{moment(itemloanedon).utc().format("YYYY-MM-DD")} 
+                    td  #{moment(itemreturnby).utc().format("YYYY-MM-DD")}
                     if itemreturnedon !== null
-                        td  #{moment(itemreturnedon).format("YYYY-MM-DD")}
+                        td  #{moment(itemreturnedon).utc().format("YYYY-MM-DD")}
                     else 
                         td
                     td
-                        a(href="/return/" + `${itembookid}` class="button") Return Book
+                        if itemreturnedon === null
+                            a(href="/return/" + `${itembookid}` class="button") Return Book
                 

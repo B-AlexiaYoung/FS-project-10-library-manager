@@ -29,13 +29,16 @@ block content
                                 option(value=newloanP[index].dataValues.id) #{newLoanPatronFullName}
             p
                 label(for="loaned_on") Loaned on:
-                - let dateLoanedOn = moment.utc()
+                //- let dateLoanedOn = moment.utc()
+                - let dateLoanedOn = moment().utc().format("YYYY MM DD")
+                - let dateReturnBy = moment().utc().add(7,'d').format("YYYY MM DD")
+
                 // let fulldate= dateloanedon +" GMT-700 (PDT)"
                 // -let returndate = moment().add(7,'d').format("ddd MMM  DD  YYYY")
-                input(id="loaned_on" name="loaned_on" type="text" value= dateLoanedOn.format("YYYY MM DD") )
+                input(id="loaned_on" name="loaned_on" type="text" value= dateLoanedOn )
             p
                 label(for="return_by") Return by:
-                input(id="return_by" name="return_by" type="text" value= dateLoanedOn.add(7,'d').format("YYYY MM DD"))
+                input(id="return_by" name="return_by" type="text" value= dateReturnBy)
             p
                 input(type="submit" value="Create New Loan")
     

@@ -58,9 +58,9 @@ block content
                         td
                             a(href="#") #{customerFullName}
                         //td #{customerloanedon}
-                        td #{moment(custHistoryLoanedOn).format("YYYY-MM-DD")}
+                        td #{moment(custHistoryLoanedOn).utc().format("YYYY-MM-DD")}
                         //td #{customerreturnby}
-                        td #{moment(custHistoryReturnBy).format("YYYY-MM-DD")}
+                        td #{moment(custHistoryReturnBy).utc().format("YYYY-MM-DD")}
                         td
                         //if(customerloandon)
                         if(custHistoryLoandOn)
