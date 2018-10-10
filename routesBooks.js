@@ -46,11 +46,11 @@ router.post("/searchbooks", (req, res, next) => {
             }
         }
     }).then((books) => {
-        
+
         res.render("all_books", {
             bookinfo: books.rows,
             pagetitle: "All Books",
-            
+
         })
     })
 })
@@ -64,12 +64,12 @@ router.get("/books/overdue", (req, res) => {
         where: {
             return_by: {
                 [Op.lt]: moment()
-            },  
+            },
             returned_on: {
-                    [Op.eq]: null
+                [Op.eq]: null
             }
         }
-        
+
     }).then(function (loans) {
         res.render("overdue_books", {
             overdue: loans,
@@ -92,21 +92,21 @@ router.get("/books/checked_books", (req, res) => {
     Loans.findAll({
         include: {
             model: Books,
-         },
-         where: {        
+        },
+        where: {
             returned_on: {
                 [Op.eq]: null
 
             }
-            
+
         }
-                
+
     }).then(function (loans) {
-       
-    res.render("checked_books", {
-        checkedout: loans,
-})
-})
+
+        res.render("checked_books", {
+            checkedout: loans,
+        })
+    })
 })
 
 
@@ -129,8 +129,7 @@ router.get("/return/:book_id", (req, res) => {
 
 
     }).then(function (loans) {
-        //console.log(loans)
-        //console.log(req.body)
+        
         res.render("return", {
 
             loanreturn: loans,
@@ -144,9 +143,9 @@ router.get("/return/:book_id", (req, res) => {
 
 //routing post-  add new book
 router.post("/books/create_new_book", function (req, res, next) {
-    let newBook =req.body;
-    
-   Books.create(newBook)
+    let newBook = req.body;
+
+    Books.create(newBook)
 
         .then(function (books) {
             res.redirect('/books')
@@ -163,7 +162,7 @@ router.post("/books/create_new_book", function (req, res, next) {
             }
         })
         .catch(function (error) {
-            //console.log(error);
+            console.log(error);
         })
 
 })
@@ -186,7 +185,7 @@ router.get("/books/:page", (req, res, next) => {
         })
         .then((books) => {
             let paginate = Math.ceil(books.count / limit);
-           
+
             res.render("all_books", {
                 bookinfo: books.rows,
                 pagetitle: "All Books",
@@ -217,7 +216,7 @@ router.get("/books/details/:id", (req, res) => {
                         book_id: req.params.id,
                     }
                 })
-                
+
                 .then(function (loans) {
                     res.render("book_details", {
                         bkloan: books,
@@ -234,6 +233,7 @@ router.get("/books/details/:id", (req, res) => {
 //routing update 'put' to update individual book information 
 router.put("/books/update/:id", (req, res, next) => {
     Books.findById(req.params.id).then(function (books) {
+        
             return books.update(req.body);
         }).then(function (books) {
             res.redirect("/books");
@@ -256,7 +256,7 @@ router.put("/books/update/:id", (req, res, next) => {
                     let bookUpdate = Books.build(req.body);
                     let bookerror = error.errors
                     bookUpdate.id = req.params.id;
-                    
+
                     res.render("book_details", {
                         bkloan: bookUpdate,
                         errors: bookerror,
@@ -267,6 +267,7 @@ router.put("/books/update/:id", (req, res, next) => {
             } //end if
         }).catch(function (error) {
             console.log(error);
+           
         })
 
 });

@@ -28,7 +28,7 @@ router.get("/patrons/:page", (req, res) => {
         })
         .then((patrons) => {
             let paginate = Math.ceil(patrons.count / limit);
-            
+
             res.render("all_patrons", {
                 patroninfo: patrons.rows,
                 pagetitle: "All Patrons",
@@ -103,7 +103,7 @@ router.post("/searchpatrons", function (req, res, next) {
         })
         .then((patrons) => {
             let paginate = Math.ceil(patrons.count / limit);
-           
+
             res.render("all_patrons", {
                 patroninfo: patrons.rows,
                 pagetitle: "All Patrons",
@@ -116,7 +116,7 @@ router.post("/searchpatrons", function (req, res, next) {
 //routing get individual customer details  second draft
 
 //router.get("/books/patrons/patron_details/:id", (req, res, next) => {
-    router.get("/patrons/patron_details/:id", (req, res, next) => {
+router.get("/patrons/patron_details/:id", (req, res, next) => {
 
     let singlePatron = req.params.id
     Patrons.findOne({
@@ -134,7 +134,7 @@ router.post("/searchpatrons", function (req, res, next) {
                 patron_id: singlePatron
             }
         }).then(function (loans) {
-            
+
             res.render("patron_details", {
                 customer: patrons,
                 custHistory: loans,
@@ -161,7 +161,7 @@ router.put("/books/patrons/patron_details/:id", (req, res, next) => {
 
         if (error.name === "SequelizeValidationError") {
             Loans.findAll({
-                include:{
+                include: {
                     model: Books
                 },
                 where: {
@@ -169,7 +169,7 @@ router.put("/books/patrons/patron_details/:id", (req, res, next) => {
                 }
 
             }).then(function (loans) {
-                
+
                 let customerUpdate = Patrons.build(req.body);
                 let customerError = error.errors
                 customerUpdate.id = req.params.id;

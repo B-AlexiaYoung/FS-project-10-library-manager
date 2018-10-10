@@ -20,7 +20,7 @@ router.get("/books/all_loans", (req, res) => {
             }
         ],
     }).then(function (loans) {
-        
+
         res.render("all_loans", {
             loaninfo: loans,
             pagetitle: "All Loans",
@@ -43,7 +43,7 @@ router.get("/new_loan", (req, res) => {
         .then(function (books) {
             Patrons.findAll()
                 .then(function (patrons) {
-                    
+
                     console.log(books[21].loans);
                     res.render("new_loan", {
                         newloan: books,
@@ -57,52 +57,56 @@ router.get("/new_loan", (req, res) => {
         })
 });
 //routing loans overdue
-router.get("/overdue_loans", (req, res, next)=>{
+router.get("/overdue_loans", (req, res, next) => {
     Loans.findAll({
         include: [{
-            model: Books
-        },
-        { model: Patrons
+                model: Books
+            },
+            {
+                model: Patrons
 
-        }],
-        where:{
+            }
+        ],
+        where: {
             return_by: {
                 [Op.lt]: moment()
             },
             returned_on: {
-                    [Op.eq]: null
+                [Op.eq]: null
             }
         }
-    }).then(function (loans){
-        console.log (loans[0].dataValues.book.dataValues)
+    }).then(function (loans) {
+        console.log(loans[0].dataValues.book.dataValues)
         res.render("loans_overdue", {
-            overdueLoans:loans,
+            overdueLoans: loans,
             moment
-        
+
         })
     })
 })
 
 //routing loans checked loans
-router.get("/checked_loans", (req, res, next)=>{
+router.get("/checked_loans", (req, res, next) => {
     Loans.findAll({
         include: [{
-            model: Books
-        },
-        { model: Patrons
+                model: Books
+            },
+            {
+                model: Patrons
 
-        }],
-        where:{
+            }
+        ],
+        where: {
             returned_on: {
                 [Op.eq]: null
             }
         }
-    }).then(function (loans){
-        console.log (loans[0].dataValues.book_id)
+    }).then(function (loans) {
+        console.log(loans[0].dataValues.book_id)
         res.render("loans_checked", {
-            loansChecked:loans,
+            loansChecked: loans,
             moment
-        
+
         })
     })
 })
@@ -130,7 +134,7 @@ router.post("/loans/new_loan_update", (req, res, next) => {
                         },
                     })
                     .then(function (books) {
-                        
+
                         Patrons.findAll()
                             .then(function (patrons) {
                                 res.render("new_loan", {
