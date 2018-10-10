@@ -28,10 +28,7 @@ router.get("/patrons/:page", (req, res) => {
         })
         .then((patrons) => {
             let paginate = Math.ceil(patrons.count / limit);
-            // console.log(patrons.count);
-            // console.log(page);
-            // console.log(paginate);
-            // console.log(patrons.rows);
+            
             res.render("all_patrons", {
                 patroninfo: patrons.rows,
                 pagetitle: "All Patrons",
@@ -106,10 +103,7 @@ router.post("/searchpatrons", function (req, res, next) {
         })
         .then((patrons) => {
             let paginate = Math.ceil(patrons.count / limit);
-            // console.log(patrons.count);
-            // console.log(page);
-            // console.log(paginate);
-            // console.log(patrons.rows);
+           
             res.render("all_patrons", {
                 patroninfo: patrons.rows,
                 pagetitle: "All Patrons",
@@ -125,7 +119,6 @@ router.post("/searchpatrons", function (req, res, next) {
     router.get("/patrons/patron_details/:id", (req, res, next) => {
 
     let singlePatron = req.params.id
-    //console.log(singlePatron);
     Patrons.findOne({
         where: {
             id: req.params.id
@@ -141,10 +134,7 @@ router.post("/searchpatrons", function (req, res, next) {
                 patron_id: singlePatron
             }
         }).then(function (loans) {
-            //console.log(loans[0].book.title);
-            //console.log(patrons.dataValues)
-            //console.log(patrons.dataValues.loans[0].dataValues.book_id);
-            //let loanDetails = patrons.dataValues.loans[0].dataValues
+            
             res.render("patron_details", {
                 customer: patrons,
                 custHistory: loans,
@@ -156,14 +146,12 @@ router.post("/searchpatrons", function (req, res, next) {
 
 //routing   put patron update
 router.put("/books/patrons/patron_details/:id", (req, res, next) => {
-    //console.log(req.body);
     let patronId;
     Patrons.findOne({
         where: {
             id: req.params.id
         }
     }).then(function (patrons) {
-        //console.log(patrons.id)
         patronId = patrons.id;
         return patrons.update(req.body);
 
@@ -181,13 +169,10 @@ router.put("/books/patrons/patron_details/:id", (req, res, next) => {
                 }
 
             }).then(function (loans) {
-                // console.log("wibble");
-                //console.log(loans.dataValues);
-                // console.log(Patrons.build(req.body));
+                
                 let customerUpdate = Patrons.build(req.body);
                 let customerError = error.errors
                 customerUpdate.id = req.params.id;
-                //console.log(customerUpdate.title);
                 res.render("patron_details", {
                     customer: customerUpdate,
                     errors: customerError,

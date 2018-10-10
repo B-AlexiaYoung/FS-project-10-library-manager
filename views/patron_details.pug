@@ -39,15 +39,11 @@ block content
                     th Returned on
                     th Action
             tbody
-            //- const getdetailsloans = customer.dataValues.loans
             - const getDetailsLoans = custHistory
 
                 tr
                 each detail, index in getDetailsLoans
-                    //- -let customerbookid = customer.loans[index].dataValues.book_id
-                    //- -let customerfullname = customer.first_name +" "+ customer.last_name
-                    //- -let customerloanedon = customer.loans[index].dataValues.loaned_on
-                    //- -let customereturnby = customer.loans[index].dataValues.return_by
+                    
                     -let customerBookid = custHistory[index].book_id
                     -let customerBookTitle = custHistory[index].book.title
                     -let customerFullName = customer.first_name +" "+ customer.last_name
@@ -57,12 +53,9 @@ block content
                             a(href="/books/details/"+ customerBookid) #{customerBookTitle}
                         td
                             a(href="#") #{customerFullName}
-                        //td #{customerloanedon}
                         td #{moment(custHistoryLoanedOn).utc().format("YYYY-MM-DD")}
-                        //td #{customerreturnby}
                         td #{moment(custHistoryReturnBy).utc().format("YYYY-MM-DD")}
                         td
-                        //if(customerloandon)
                         if(custHistoryLoandOn)
 
                         td

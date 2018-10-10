@@ -39,16 +39,13 @@ block content
                
                 - const getfromloans = loanHistory
                 
-                //- console.log(getfromloans)
                 each getfrom, index in getfromloans
-                    //- fullName = getfrom.dataValues.patrons.dataValues.first_name
                     tr
                         - let fullName = getfromloans[0].patron.first_name + " " + getfromloans[index].patron.last_name
                         - let loanedOn = getfromloans[0].loaned_on
                         - let returnBy = getfromloans[0].return_by
                         - let returnedOn = getfromloans[0].returned_on
                         td
-                            //a(href="/books/details/" + `${getfromloans.book_id}`) #{getfrom.book.title} 
                             a(href="#") #{getfrom.book.title}   
     
                         td  

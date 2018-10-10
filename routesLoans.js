@@ -20,10 +20,7 @@ router.get("/books/all_loans", (req, res) => {
             }
         ],
     }).then(function (loans) {
-        //console.log(loans)
-        //console.log(loans[0].book_id);
-        //console.log(loans[1].dataValues.patron.dataValues.first_name);
-
+        
         res.render("all_loans", {
             loaninfo: loans,
             pagetitle: "All Loans",
@@ -44,13 +41,10 @@ router.get("/new_loan", (req, res) => {
 
         })
         .then(function (books) {
-            //console.log(books[0].dataValues.id);
             Patrons.findAll()
                 .then(function (patrons) {
-                    //console.log(books)
-                    //console.log(patrons[0].dataValues.first_name);
+                    
                     console.log(books[21].loans);
-                    //console.log(patrons)
                     res.render("new_loan", {
                         newloan: books,
                         moment,
@@ -118,7 +112,6 @@ router.get("/checked_loans", (req, res, next)=>{
 
 // routing update loans table for new loan
 router.post("/loans/new_loan_update", (req, res, next) => {
-    //console.log(req.body);
     let checkLoan = req.body;
     checkLoan.returned_on = null;
     Loans.create(checkLoan)
@@ -137,8 +130,7 @@ router.post("/loans/new_loan_update", (req, res, next) => {
                         },
                     })
                     .then(function (books) {
-                        // console.log(noDate);
-                        // console.log(books[0]);
+                        
                         Patrons.findAll()
                             .then(function (patrons) {
                                 res.render("new_loan", {
