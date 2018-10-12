@@ -40,7 +40,8 @@ router.get("/patrons/:page", (req, res) => {
 
 //routing new patron
 router.get("/new_patron", (req, res) => {
-    res.render("new_patron");
+    res.render("new_patron",{
+        patron: Patrons.build()});
 })
 
 
